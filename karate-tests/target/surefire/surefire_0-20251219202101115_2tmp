@@ -1,5 +1,0 @@
-#surefire_0
-#Fri Dec 19 20:21:01 UTC 2025
-basedir=/home/bdchang/Roadtrip/karate-tests
-app.url=http\://localhost\:3000
-localRepository=/home/bdchang/.m2/repository
