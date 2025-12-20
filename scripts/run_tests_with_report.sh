@@ -15,8 +15,16 @@ mvn test -Dapp.version="${SHA}" "$@"
 
 echo "Test run complete."
 
-# Open the summary report
-REPORT_PATH="target/karate-reports/karate-summary.html"
+# Define persistent report location
+PERSISTENT_DIR="reports/latest"
+mkdir -p "$PERSISTENT_DIR"
+
+# Copy generated reports to persistent location
+cp -r target/karate-reports/* "$PERSISTENT_DIR/"
+echo "Reports saved to $PERSISTENT_DIR/"
+
+# Open the summary report from the persistent location
+REPORT_PATH="$PERSISTENT_DIR/karate-summary.html"
 if [ -f "$REPORT_PATH" ]; then
     echo "Opening report: $REPORT_PATH"
     if command -v xdg-open &> /dev/null; then
