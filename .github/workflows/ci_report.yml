@@ -1,0 +1,44 @@
+name: CI with Reporting
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'corretto'
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build and Run App Container
+      run: |
+        # Build with API key from secrets
+        docker build --build-arg REACT_APP_GOOGLE_API_KEY=${{ secrets.REACT_APP_GOOGLE_API_KEY }} -t roadtrip-app .
+        # Run in background
+        docker run -d -p 3000:80 roadtrip-app
+        # Give it a moment to stabilize
+        sleep 10
+
+    - name: Run Karate Tests
+      working-directory: karate-tests
+      # Inject GitHub SHA as app.version for the report
+      run: mvn test -Dapp.version=${{ github.sha }}
+
+    - name: Upload Test Reports
+      if: always() # Upload even if tests fail
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-reports
+        path: karate-tests/target/karate-reports

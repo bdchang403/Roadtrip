@@ -11,6 +11,9 @@ function fn() {
     // Get Base URL from system property or environment variable. Default to localhost.
     var baseUrl = karate.properties['app.url'] || java.lang.System.getenv('APP_URL') || 'http://localhost:3000';
 
+    // Get Application Version (injected by CI or local script)
+    var appVersion = karate.properties['app.version'] || 'unknown';
+
     if (!apiKey) {
         karate.log('WARNING: REACT_APP_GOOGLE_API_KEY is not set. Tests may fail.');
     }
@@ -19,7 +22,9 @@ function fn() {
         env: env,
         apiKey: apiKey,
         baseUrl: baseUrl,
-        googleMapsBaseUrl: 'https://maps.googleapis.com/maps/api'
+        baseUrl: baseUrl,
+        googleMapsBaseUrl: 'https://maps.googleapis.com/maps/api',
+        appVersion: appVersion
     }
 
     return config;
