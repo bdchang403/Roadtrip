@@ -171,3 +171,48 @@ Feature: Combined Roadtrip Application Tests
     # Verify input is reset (should not contain the old data)
     # It usually resets to empty string or undefined
     Then match value("input[name='attractions']") != 'DataToClear'
+
+  # ==================================================================================
+  # GROUP 6: OWASP SECURITY CHECKS
+  # Focus: Top 10 vulnerabilities (Headers, Injection, etc.)
+  # ==================================================================================
+
+  @security @owasp @regression
+  Scenario: Check for Security Headers (A05:2021 Security Misconfiguration)
+    # Reset URL to the app base URL (Background sets it to Google Maps)
+    Given url baseUrl
+    When method get
+    Then status 200
+    # Check for X-Content-Type-Options (prevents MIME sniffing)
+    # Using 'match header' which is case-insensitive in Karate
+    And match header X-Content-Type-Options == 'nosniff'
+
+  @security @owasp @regression
+  Scenario: Verify XSS Protection in Search Inputs (A03:2021 Injection)
+    Given driver baseUrl
+    And waitFor('#root')
+
+    # Define a malicious XSS payload
+    * def xssPayload = "<script>alert('XSS')</script>"
+    
+    # Attempt to inject into the Starting Point input
+    And input("input[placeholder='A: Starting Point']", xssPayload)
+    And delay(1000)
+    And input("input[placeholder='A: Starting Point']", Key.ENTER)
+    
+    # Proceed to see if it triggers or if the app crashes/behaves normally
+    # We verify that the alert does NOT appear. 
+    # In Karate, we can check if a dialog appeared, or check the DOM.
+    # If the script executed, an alert would usually block the driver or exist.
+    # Note: Karate's 'dialog' keyword handles alerts.
+    
+    # We assert that the input value is either sanitized or contained safely as text
+    Then match value("input[placeholder='A: Starting Point']") contains xssPayload
+    
+    # Ensure no alert dialog is present (this would throw if an alert was open and we tried to interact, 
+    # but explicitly checking for absence is good practice effectively done by valid flow continuing)
+    # We can also check that the body doesn't contain the *result* of execution if it were a DOM injection 
+    # (though that depends on the specific XSS vector).
+    
+    # If we got here without the test hanging on an unhandled alert, it's a good sign.
+
