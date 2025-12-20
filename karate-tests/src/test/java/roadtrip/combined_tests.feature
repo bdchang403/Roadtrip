@@ -168,6 +168,7 @@ Feature: Combined Roadtrip Application Tests
     # Material UI buttons often don't strictly preserve 'type=clear' as a standard HTML attribute in the same way, 
     # but let's try matching by text or class logic if generic selector fails.
     # Based on Location.js: <Button type="clear" value="Clear" ...>
+    And waitFor("//button[text()='Clear All']")
     And click("//button[text()='Clear All']")
     
     # Wait for the reload that happens in the app logic (setTimeout 250ms)
