@@ -19,7 +19,7 @@ function fn() {
     }
 
     var config = {
-        env: env,
+        env: env + ' (v: ' + appVersion + ')',
         apiKey: apiKey,
         baseUrl: baseUrl,
         baseUrl: baseUrl,

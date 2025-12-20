@@ -8,6 +8,7 @@ Feature: Combined Roadtrip Application Tests
     * configure driver = { type: 'chrome', showDriverLog: true, addOptions: ["--headless=new", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "--window-size=1920,1080"] }
     * def apiKey = apiKey
     * url googleMapsBaseUrl
+    * print 'Execution Version:', appVersion
 
   # ==================================================================================
   # GROUP 1: UI RELIABILITY & SMOKE TESTS
