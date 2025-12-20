@@ -34,7 +34,7 @@ Feature: Combined Roadtrip Application Tests
   # Focus: verifying that the configured Google API Key is valid and services are reachable.
   # ==================================================================================
 
-  @api @regression @ignore
+  @api @regression
   Scenario: Validate API Key with Directions API
     Given path 'directions', 'json'
     And param origin = 'New York, NY'
