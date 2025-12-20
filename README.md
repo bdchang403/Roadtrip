@@ -106,7 +106,7 @@ Use the `-Dkarate.options="--tags @tagName"` option to run specific test groups:
 | Tag | Description | Scenarios |
 | :--- | :--- | :--- |
 | `@smoke` | Critical path verification | Dashboard load check (Fast) |
-| `@ui` | User Interface flows | BBQ Search, Dashboard, Persistence |
+| `@ui` | User Interface flows | Attraction Search, Dashboard, Persistence |
 | `@api` | API Key validation | Direct calls to Google Maps JS/Directions (No UI) |
 | `@integration` | Service integration | Backend Directions & Places API calls |
 | `@persistence` | Local Storage logic | Verify data retention and 'Clear All' |
