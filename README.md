@@ -5,7 +5,7 @@ Version: MVP #1
 
 ## Release Notes
 This version is the initial release of Roadtrip Planner, enabling users to:
-1. Search attractions between two destinations
+1. Search attractions between two destinations with category filtering
 2. Use local storage to remember map and places
 
 **Demo Link:** [https://master.d22ka3sgyhdlrt.amplifyapp.com/](https://master.d22ka3sgyhdlrt.amplifyapp.com/)
@@ -81,8 +81,9 @@ Upon loading the application, you will be presented with the main dashboard. The
 To plan a trip:
 1.  Enter a **Starting Point** (e.g., "San Francisco, CA").
 2.  Enter a **Destination** (e.g., "Los Angeles, CA").
-3.  *Autocomplete suggestions from the Places API will assist you.*
-4.  Click the **Submit** button.
+3.  Enter an **Attraction Type** (e.g., "museum", "park", "BBQ") to find stops along the way.
+4.  *Autocomplete suggestions from the Places API will assist you.*
+5.  Click the **Submit** button.
 
 The application will calculate the optimal driving route and display it on the map.
 
