@@ -91,7 +91,7 @@ The application will calculate the optimal driving route and display it on the m
 
 This project uses Karate for automated testing. You can run specific test suites using feature flags (tags).
 
-**[View Latest Test Reports](https://bdchang403.github.io/Roadtrip/karate-summary.html)**
+**[View Latest Test Reports](https://bdchang403.github.io/Roadtrip/)**
 
 ### Running Tests
 To run tests, navigate to the `karate-tests` directory and use Maven:

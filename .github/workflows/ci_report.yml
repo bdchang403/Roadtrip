@@ -38,6 +38,12 @@ jobs:
       # Inject GitHub SHA as app.version for the report
       run: mvn test -Dapp.version=${{ github.sha }}
 
+    - name: Prepare Pages
+      if: always()
+      run: |
+        touch karate-tests/target/karate-reports/.nojekyll
+        cp karate-tests/target/karate-reports/karate-summary.html karate-tests/target/karate-reports/index.html
+
     - name: Upload Pages Artifact
       if: always()
       uses: actions/upload-pages-artifact@v2
