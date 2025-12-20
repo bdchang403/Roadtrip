@@ -36,7 +36,11 @@ class Location extends React.Component {
         })
         // Fetch route upon submission
         if (eventType === "Submit") {
-            this.fetchRoute();
+            if (this.state.origin && this.state.destination) {
+                this.fetchRoute();
+            } else {
+                alert("Incorrect Origin or Destination. Please try again");
+            }
             localStorage.setItem("attractions", this.state.attractions);
         }
         // Clear localstorage and reload page
