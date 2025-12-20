@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
     - uses: actions/checkout@v3
@@ -36,9 +38,23 @@ jobs:
       # Inject GitHub SHA as app.version for the report
       run: mvn test -Dapp.version=${{ github.sha }}
 
-    - name: Upload Test Reports
-      if: always() # Upload even if tests fail
-      uses: actions/upload-artifact@v3
+    - name: Upload Pages Artifact
+      if: always()
+      uses: actions/upload-pages-artifact@v2
       with:
-        name: test-reports
         path: karate-tests/target/karate-reports
+
+  deploy:
+    needs: test
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    if: always() # Deploy even if tests fail so we can see the report
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
