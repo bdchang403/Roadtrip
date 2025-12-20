@@ -67,7 +67,7 @@ Feature: Combined Roadtrip Application Tests
   # Focus: Validating actual integration with Google backend services (Directions, Places).
   # ==================================================================================
 
-  @integration @regression @ignore
+  @integration @regression
   Scenario: Fetch Route (Directions API)
     # Testing directions between Toronto (origin in location.js) and Calgary (destination in location.js)
     Given path 'directions', 'json'
@@ -79,7 +79,7 @@ Feature: Combined Roadtrip Application Tests
     And match response.status == 'OK'
     And match response.routes[0].legs[0] != null
 
-  @integration @regression @ignore
+  @integration @regression
   Scenario: Fetch Nearby Search (Places API)
     # Testing places search near a location (simulating finding attractions)
     Given path 'place', 'nearbysearch', 'json'
