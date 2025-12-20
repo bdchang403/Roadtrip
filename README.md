@@ -1,14 +1,12 @@
 # Roadtrip Planner
 
 Created by Bruce Chang  
-Version: MVP #1
+Version: MVP #1.5
 
 ## Release Notes
 This version is the initial release of Roadtrip Planner, enabling users to:
 1. Search attractions between two destinations with category filtering
 2. Use local storage to remember map and places
-
-**Demo Link:** [https://master.d22ka3sgyhdlrt.amplifyapp.com/](https://master.d22ka3sgyhdlrt.amplifyapp.com/)
 
 ---
 
