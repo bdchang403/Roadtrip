@@ -25,13 +25,18 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build and Run App Container
+    - name: Build App Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        load: true
+        tags: roadtrip-app:latest
+        build-args: |
+          REACT_APP_GOOGLE_API_KEY=${{ secrets.REACT_APP_GOOGLE_API_KEY }}
+
+    - name: Start App Container
       run: |
-        # Build with API key from secrets
-        docker build --build-arg REACT_APP_GOOGLE_API_KEY=${{ secrets.REACT_APP_GOOGLE_API_KEY }} -t roadtrip-app .
-        # Run in background
-        docker run -d -p 3000:80 roadtrip-app
-        # Give it a moment to stabilize
+        docker run -d -p 3000:80 roadtrip-app:latest
         sleep 10
 
     - name: Run Karate Tests
