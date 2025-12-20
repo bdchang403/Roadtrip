@@ -37,6 +37,8 @@ jobs:
       working-directory: karate-tests
       # Inject GitHub SHA as app.version for the report
       run: mvn test -Dapp.version=${{ github.sha }}
+      env:
+        REACT_APP_GOOGLE_API_KEY: ${{ secrets.REACT_APP_GOOGLE_API_KEY }}
 
     - name: Prepare Pages
       if: always()
