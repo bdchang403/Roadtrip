@@ -14,6 +14,7 @@ Feature: Combined Roadtrip Application Tests
   # Focus: Ensuring the application loads correctly and key elements are visible.
   # ==================================================================================
   
+  @smoke @regression
   Scenario: Validate App Dashboard Loads
     Given driver baseUrl
     # Wait for the app to load
@@ -30,6 +31,7 @@ Feature: Combined Roadtrip Application Tests
   # Focus: verifying that the configured Google API Key is valid and services are reachable.
   # ==================================================================================
 
+  @api @regression
   Scenario: Validate API Key with Directions API
     Given path 'directions', 'json'
     And param origin = 'New York, NY'
@@ -39,6 +41,7 @@ Feature: Combined Roadtrip Application Tests
     Then status 200
     And match response.status == 'OK'
 
+  @api @regression
   Scenario: Validate API Key with Maps JavaScript API
     Given url 'https://maps.googleapis.com/maps/api/js'
     And param key = apiKey
@@ -46,6 +49,7 @@ Feature: Combined Roadtrip Application Tests
     Then status 200
     And match response !contains 'error_message'
 
+  @api @regression
   Scenario: Validate API Key with Maps JavaScript API and Referer
     Given url 'https://maps.googleapis.com/maps/api/js'
     And param key = apiKey
@@ -60,6 +64,7 @@ Feature: Combined Roadtrip Application Tests
   # Focus: Validating actual integration with Google backend services (Directions, Places).
   # ==================================================================================
 
+  @integration @regression
   Scenario: Fetch Route (Directions API)
     # Testing directions between Toronto (origin in location.js) and Calgary (destination in location.js)
     Given path 'directions', 'json'
@@ -71,6 +76,7 @@ Feature: Combined Roadtrip Application Tests
     And match response.status == 'OK'
     And match response.routes[0].legs[0] != null
 
+  @integration @regression
   Scenario: Fetch Nearby Search (Places API)
     # Testing places search near a location (simulating finding attractions)
     Given path 'place', 'nearbysearch', 'json'
@@ -86,6 +92,7 @@ Feature: Combined Roadtrip Application Tests
   # Focus: End-to-end user scenarios like searching for routes and attractions.
   # ==================================================================================
 
+  @ui @functional @regression
   Scenario: Search for BBQ attractions between Toronto and Nashville
     Given driver baseUrl
     And waitFor('#root')
@@ -117,6 +124,7 @@ Feature: Combined Roadtrip Application Tests
   # Focus: Verifying data retention on reload and clearing functionality.
   # ==================================================================================
 
+  @persistence @ui @regression
   Scenario: Verify Local Storage Persistence on Page Reload
     Given driver baseUrl
     And waitFor('#root')
@@ -137,6 +145,7 @@ Feature: Combined Roadtrip Application Tests
     # We check the 'value' attribute of the input or the text inside it
     Then match value("input[name='attractions']") == 'UserPersistenceTest'
 
+  @persistence @ui @regression
   Scenario: Verify Clear All Functionality
     Given driver baseUrl
     And waitFor('#root')

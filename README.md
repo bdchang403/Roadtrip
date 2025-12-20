@@ -87,3 +87,35 @@ To plan a trip:
 The application will calculate the optimal driving route and display it on the map.
 
 ![Route View](docs/images/route.png)
+
+## Testing & Verification
+
+This project uses Karate for automated testing. You can run specific test suites using feature flags (tags).
+
+### Running Tests
+To run tests, navigate to the `karate-tests` directory and use Maven:
+```bash
+cd karate-tests
+mvn test
+```
+
+### Selective Testing (Feature Flags)
+Use the `-Dkarate.options="--tags @tagName"` option to run specific test groups:
+
+| Tag | Description | Scenarios |
+| :--- | :--- | :--- |
+| `@smoke` | Critical path verification | Dashboard load check (Fast) |
+| `@ui` | User Interface flows | BBQ Search, Dashboard, Persistence |
+| `@api` | API Key validation | Direct calls to Google Maps JS/Directions (No UI) |
+| `@integration` | Service integration | Backend Directions & Places API calls |
+| `@persistence` | Local Storage logic | Verify data retention and 'Clear All' |
+| `@regression` | Full suite | All tests |
+
+**Example:**
+```bash
+# Run only smoke tests
+mvn test -Dkarate.options="--tags @smoke"
+
+# Run non-API tests (skip tests requiring injected keys)
+mvn test -Dkarate.options="--tags ~@api"
+```
