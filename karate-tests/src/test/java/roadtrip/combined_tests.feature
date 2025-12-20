@@ -8,6 +8,8 @@ Feature: Combined Roadtrip Application Tests
     * configure driver = { type: 'chrome', showDriverLog: true, addOptions: ["--headless=new", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "--window-size=1920,1080"] }
     * def apiKey = apiKey
     * url googleMapsBaseUrl
+    # Add Referer to satisfy API key restrictions (mimic local/prod app)
+    * header Referer = 'http://localhost:3000/'
     * print 'Execution Version:', appVersion
 
   # ==================================================================================
