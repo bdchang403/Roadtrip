@@ -68,6 +68,30 @@ docker run -d -p 3000:80 roadtrip-app
 
 Access the application at [http://localhost:3000](http://localhost:3000).
 
+## CI/CD & Infrastructure
+
+This repository uses **Google Cloud Platform (GCP)** self-hosted runners for GitHub Actions to ensure a secure and consistent CI environment.
+
+### Setting up Runners
+We use `gcloud` scripts to deploy managed instance groups for our runners.
+
+1.  **Prerequisites**:
+    *   Google Cloud Project with billing enabled.
+    *   GitHub Personal Access Token (PAT) with `repo` scope.
+    *   `gcloud` CLI installed and authenticated (`gcloud auth login`).
+
+2.  **Deploy Runners**:
+    Run the deployment script to create the infrastructure:
+    ```bash
+    ./scripts/gcp-runner-deploy.sh
+    ```
+    *   The script creates an Instance Template and a Managed Instance Group.
+    *   It installs Docker, Git, Maven, and Google Chrome (for UI testing).
+    *   Runners automatically register with the repository and shut down if idle for too long.
+
+### Security Updates
+We use `npm` overrides in `package.json` to enforce secure versions of dependencies (e.g., `nth-check`, `postcss`), resolving vulnerabilities in transitive dependencies like `react-scripts`.
+
 ## Usage Scenarios
 
 ### 1. Home Page Dashboard
