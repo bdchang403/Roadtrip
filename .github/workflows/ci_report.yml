@@ -36,7 +36,8 @@ jobs:
 
     - name: Start App Container
       run: |
-        docker run -d -p 3000:80 roadtrip-app:latest
+        docker rm -f roadtrip-ci-test || true
+        docker run -d -p 3000:80 --name roadtrip-ci-test roadtrip-app:latest
         sleep 10
 
     - name: Run Karate Tests
@@ -58,6 +59,10 @@ jobs:
       with:
         path: karate-tests/target/karate-reports
 
+    - name: Cleanup Container
+      if: always()
+      run: docker rm -f roadtrip-ci-test || true
+
   deploy:
     needs: test
     permissions:
@@ -72,3 +77,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
