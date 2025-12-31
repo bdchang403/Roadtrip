@@ -19,7 +19,7 @@ echo 'vm.swappiness=60' >> /etc/sysctl.conf
 # --- 2. Install Dependencies ---
 echo "Installing Docker and Git..."
 apt-get update
-apt-get install -y docker.io git jq curl
+apt-get install -y docker.io git jq curl maven
 
 echo "Installing GitHub CLI (gh)..."
 # Create keyring directory if it doesn't exist
