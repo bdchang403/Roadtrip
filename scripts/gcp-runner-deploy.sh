@@ -14,6 +14,12 @@ if [ -f .env ]; then
     export $(cat .env | xargs)
 fi
 
+# Check for gcloud auth
+if ! gcloud auth print-access-token &>/dev/null; then
+    echo "Error: gcloud not authenticated. Please run 'gcloud auth login' and try again."
+    exit 1
+fi
+
 # Check if GITHUB_PAT is set, otherwise prompt
 if [ -z "$GITHUB_PAT" ]; then
     read -s -p "Enter GitHub PAT: " GITHUB_PAT
