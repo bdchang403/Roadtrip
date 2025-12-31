@@ -32,15 +32,21 @@ echo "Region: $REGION"
 # 0. Cleanup Existing Resources (to allow upgrades/re-runs)
 echo "Cleaning up existing resources..."
 # Delete MIG if it exists
-if gcloud compute instance-groups managed describe $MIG_NAME --zone=$ZONE --project=$PROJECT_ID &>/dev/null; then
+echo "Checking for existing MIG..."
+if gcloud compute instance-groups managed describe $MIG_NAME --zone=$ZONE --project=$PROJECT_ID; then
     echo "Deleting existing MIG: $MIG_NAME"
     gcloud compute instance-groups managed delete $MIG_NAME --zone=$ZONE --project=$PROJECT_ID --quiet
+else
+    echo "MIG not found, skipping delete."
 fi
 
 # Delete Instance Template if it exists (Global)
-if gcloud compute instance-templates describe $TEMPLATE_NAME --project=$PROJECT_ID &>/dev/null; then
+echo "Checking for existing Instance Template..."
+if gcloud compute instance-templates describe $TEMPLATE_NAME --project=$PROJECT_ID; then
     echo "Deleting existing Instance Template: $TEMPLATE_NAME"
     gcloud compute instance-templates delete $TEMPLATE_NAME --project=$PROJECT_ID --quiet
+else
+    echo "Template not found, skipping delete."
 fi
 
 # 1. Create Instance Template
