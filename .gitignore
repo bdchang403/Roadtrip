@@ -36,3 +36,4 @@ gcp-key.json
 # Local SDK
 google-cloud-sdk/
 google-cloud-sdk-linux-x86_64.tar.gz
+LESSONS_LEARNED.md
