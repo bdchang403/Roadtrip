@@ -48,6 +48,14 @@ apt-get update
 apt-get install -y google-chrome-stable
 ```
 
+## 5. Golden Image Build Hang (apt-get)
+**Issue**: The `build-image.sh` script hung indefinitely during the `setup-image.sh` execution, specifically during `apt-get install`.
+**Cause**: `apt-get` was likely waiting for interactive user input (e.g., confirming a configuration or a service restart) which isn't visible in a non-interactive startup script environment.
+**Solution**: Set the `DEBIAN_FRONTEND` environment variable to `noninteractive` at the beginning of the `setup-image.sh` script to suppress prompts and accept defaults.
+```bash
+export DEBIAN_FRONTEND=noninteractive
+```
+
 ## General Best Practice: Redeploying Runners
 **Lesson**: When modifying `gcp-startup-script.sh`, changes do **not** apply to existing running instances.
 **Procedure**: You must always re-run the deployment script (`./scripts/gcp-runner-deploy.sh`). This script handles the lifecycle:
