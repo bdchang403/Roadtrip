@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: [self-hosted, linux, gcp-micro]
+    runs-on: [self-hosted, linux, gcp-runner]
     permissions:
       contents: read
     environment: CI
