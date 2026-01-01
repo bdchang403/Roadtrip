@@ -2,7 +2,7 @@
 # Deploy GCP Runner Infrastructure for Roadtrip
 
 # Configuration
-PROJECT_ID=$(gcloud config get-value project)
+PROJECT_ID="myhackeryouproject"
 REGION="us-central1"
 ZONE="us-central1-a"
 TEMPLATE_NAME="roadtrip-runner-template"
@@ -20,9 +20,14 @@ if ! gcloud auth print-access-token &>/dev/null; then
     exit 1
 fi
 
-# Check if GITHUB_PAT is set, otherwise prompt
+# 2. Get GitHub Token
+if [ -f .env ]; then
+    source .env
+fi
+
 if [ -z "$GITHUB_PAT" ]; then
-    read -s -p "Enter GitHub PAT: " GITHUB_PAT
+    echo "Enter GitHub PAT:"
+    read -s GITHUB_PAT
     echo ""
 fi
 
@@ -62,8 +67,8 @@ gcloud compute instance-templates create $TEMPLATE_NAME \
     --service-account=default \
     --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
     --tags=http-server,https-server \
-    --image-family=ubuntu-2204-lts \
-    --image-project=ubuntu-os-cloud \
+    --image=roadtrip-runner-golden-image \
+    --image-project=$PROJECT_ID \
     --boot-disk-size=100GB \
     --boot-disk-type=pd-balanced \
     --boot-disk-device-name=$TEMPLATE_NAME
